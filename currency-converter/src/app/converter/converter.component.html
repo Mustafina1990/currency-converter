@@ -1,1 +1,19 @@
-<p>converter works!</p>
+<div>
+  <h2>Currency Converter</h2>
+  <div>
+    <input type="number" [(ngModel)]="amount1" (input)="onAmount1Change()" />
+    <select [(ngModel)]="currency1" (change)="onCurrency1Change()">
+      <option *ngFor="let currency of ['UAH', 'USD', 'EUR']">
+        {{ currency }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <input type="number" [(ngModel)]="amount2" (input)="onAmount2Change()" />
+    <select [(ngModel)]="currency2" (change)="onCurrency2Change()">
+      <option *ngFor="let currency of ['UAH', 'USD', 'EUR']">
+        {{ currency }}
+      </option>
+    </select>
+  </div>
+</div>

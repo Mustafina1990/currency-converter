@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CurrencyService } from './../currency.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-converter',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './converter.component.html',
   styleUrl: './converter.component.css',
 })
