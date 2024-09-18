@@ -12,7 +12,7 @@
       (change)="onCurrency1Change()"
       class="converter-select"
     >
-      <option *ngFor="let currency of ['UAH', 'USD', 'EUR']">
+      <option *ngFor="let currency of currencies">
         {{ currency }}
       </option>
     </select>
@@ -29,7 +29,7 @@
       (change)="onCurrency2Change()"
       class="converter-select"
     >
-      <option *ngFor="let currency of ['UAH', 'USD', 'EUR']">
+      <option *ngFor="let currency of currencies">
         {{ currency }}
       </option>
     </select>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CurrencyService } from './../currency.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CurrencyService } from './../currency.service';
 
 @Component({
   selector: 'app-converter',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './converter.component.html',
-  styleUrl: './converter.component.css',
+  styleUrls: ['./converter.component.css'],
 })
 export class ConverterComponent implements OnInit {
   rates: any;
@@ -17,45 +17,46 @@ export class ConverterComponent implements OnInit {
   amount2: number = 0;
   currency1: string = 'UAH';
   currency2: string = 'USD';
+  currencies: string[] = ['UAH', 'USD', 'EUR'];
 
   constructor(private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
     this.currencyService.getRates().subscribe((data) => {
       this.rates = data.rates;
-      this.convert();
+      this.convertFromAmount1();
     });
   }
 
-  convert() {
-    if (this.currency1 === 'UAH') {
-      this.amount2 =
-        (this.amount1 / this.rates[this.currency1]) *
-        this.rates[this.currency2];
-    } else if (this.currency2 === 'UAH') {
-      this.amount2 = this.amount1 / this.rates[this.currency1];
-    } else {
-      this.amount2 =
-        this.amount1 *
-        (this.rates[this.currency2] / this.rates[this.currency1]);
+  convertFromAmount1(): void {
+    if (this.rates) {
+      const rate1 = this.rates[this.currency1];
+      const rate2 = this.rates[this.currency2];
+      this.amount2 = (this.amount1 * rate2) / rate1;
     }
   }
 
-  onAmount1Change() {
-    this.convert();
+  convertFromAmount2(): void {
+    if (this.rates) {
+      const rate1 = this.rates[this.currency1];
+      const rate2 = this.rates[this.currency2];
+      this.amount1 = (this.amount2 * rate1) / rate2;
+    }
   }
 
-  onCurrency1Change() {
-    this.convert();
+  onAmount1Change(): void {
+    this.convertFromAmount1();
   }
 
-  onAmount2Change() {
-    this.amount1 =
-      this.amount2 / this.rates[this.currency2] / this.rates[this.currency1];
-    this.convert();
+  onCurrency1Change(): void {
+    this.convertFromAmount1();
   }
 
-  onCurrency2Change() {
-    this.convert();
+  onAmount2Change(): void {
+    this.convertFromAmount2();
+  }
+
+  onCurrency2Change(): void {
+    this.convertFromAmount2();
   }
 }
